@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tunify-Platform", "Tunify-Platform\Tunify-Platform.csproj", "{6C66ED9A-99A5-49A6-8C53-A6683BEF52FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C66ED9A-99A5-49A6-8C53-A6683BEF52FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C66ED9A-99A5-49A6-8C53-A6683BEF52FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C66ED9A-99A5-49A6-8C53-A6683BEF52FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C66ED9A-99A5-49A6-8C53-A6683BEF52FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FDB82AE1-0CD2-4EDE-B18D-237B1AC30D04}
+	EndGlobalSection
+EndGlobal
