@@ -2,7 +2,6 @@
 
 Tunify Platform is a web application designed to manage and interact with music-related data. It integrates various entities such as users, subscriptions, playlists, songs, artists, albums, and playlist songs into a cohesive system.
 
-ERD Diagram
 ![ERD](./Tunify.png)
 
 Entity Relationships
