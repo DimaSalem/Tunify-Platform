@@ -7,5 +7,7 @@
         public string Email { get; set; }
         public DateTime Join_Date { get; set; }
         public int Subscription_ID { get; set; }//FK
+        public Subscription Subscription { get; set; }
+        public ICollection<Playlist> Playlists { get; set; }
     }
 }
