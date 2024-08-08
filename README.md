@@ -21,6 +21,7 @@ Album: Groups of songs released together by artists.
 PlaylistSongs: Links songs to playlists, allowing multiple songs in each playlist.
 
 Each entity is related through foreign keys and navigational properties as depicted in the ERD, ensuring proper data management and relationships.
+
 The Repository Design Pattern is a structural pattern that abstracts data access logic by encapsulating it within repository classes. It provides a layer between the data access code and the business logic, promoting a cleaner separation of concerns.
 
 ### **Benefits of Repository Design Pattern**
