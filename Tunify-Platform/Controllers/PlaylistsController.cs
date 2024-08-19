@@ -16,10 +16,11 @@ namespace Tunify_Platform.Controllers
     public class PlaylistsController : ControllerBase
     {
         private readonly IRepository<Playlist> _playlistRepository;
-
-        public PlaylistsController(IRepository<Playlist> context)
+        private readonly IPlaylist _playlist;
+        public PlaylistsController(IRepository<Playlist> context, IPlaylist context2)
         {
             _playlistRepository = context;
+            _playlist = context2;
         }
 
         // GET: api/Playlists
@@ -70,6 +71,22 @@ namespace Tunify_Platform.Controllers
             }
             await _playlistRepository.Delete(id);
             return NoContent();
+        }
+
+        // POST api/playlists/{playlistId}/songs/{songId}
+        [HttpPost("{playlistId}/songs/{songId}")]
+        public async Task<IActionResult> AddPlaylistSong(int playlistID, int songId)
+        {
+            await _playlist.AddPlaylistSong(playlistID, songId);
+            return Ok();
+        }
+
+        //GET /api/playlists/{playlistId}/songs
+        [HttpGet("{playlistId}/songs")]
+        public async Task<IActionResult> GetPlaylistSongs(int playlistId)
+        {
+            var songs= await _playlist.GetPLaylistSongs(playlistId);
+            return Ok(songs);
         }
 
     }
