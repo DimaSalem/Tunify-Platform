@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunify_Platform.Data;
 
@@ -11,9 +12,11 @@ using Tunify_Platform.Data;
 namespace Tunify_Platform.Migrations
 {
     [DbContext(typeof(TunifyDbContext))]
-    partial class TunifyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240818225112_update_model")]
+    partial class update_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,14 +129,14 @@ namespace Tunify_Platform.Migrations
                         new
                         {
                             Id = 1,
-                            Created_Date = new DateTime(2024, 8, 19, 2, 41, 7, 910, DateTimeKind.Local).AddTicks(633),
+                            Created_Date = new DateTime(2024, 8, 19, 1, 51, 12, 515, DateTimeKind.Local).AddTicks(1793),
                             Playlist_Name = "User1 Playlist",
                             User_ID = 1
                         },
                         new
                         {
                             Id = 2,
-                            Created_Date = new DateTime(2024, 8, 19, 2, 41, 7, 910, DateTimeKind.Local).AddTicks(636),
+                            Created_Date = new DateTime(2024, 8, 19, 1, 51, 12, 515, DateTimeKind.Local).AddTicks(1795),
                             Playlist_Name = "User2 Playlist",
                             User_ID = 2
                         });
@@ -289,7 +292,7 @@ namespace Tunify_Platform.Migrations
                         {
                             Id = 1,
                             Email = "user1@example.com",
-                            Join_Date = new DateTime(2024, 8, 19, 2, 41, 7, 910, DateTimeKind.Local).AddTicks(600),
+                            Join_Date = new DateTime(2024, 8, 19, 1, 51, 12, 515, DateTimeKind.Local).AddTicks(1761),
                             Subscription_ID = 2,
                             UserName = "user1"
                         },
@@ -297,7 +300,7 @@ namespace Tunify_Platform.Migrations
                         {
                             Id = 2,
                             Email = "user2@example.com",
-                            Join_Date = new DateTime(2024, 8, 19, 2, 41, 7, 910, DateTimeKind.Local).AddTicks(619),
+                            Join_Date = new DateTime(2024, 8, 19, 1, 51, 12, 515, DateTimeKind.Local).AddTicks(1775),
                             Subscription_ID = 1,
                             UserName = "user2"
                         });

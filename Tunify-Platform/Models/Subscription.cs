@@ -5,6 +5,6 @@
         public int Id { get; set; }//PK
         public string SubscriptionType { get; set; }
         public double Price { get; set; }
-        public ICollection<User>Users { get; set; }
+        public User User { get; set; }
     }
 }
