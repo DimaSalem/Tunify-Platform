@@ -19,10 +19,12 @@ namespace Tunify_Platform.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PlaylistSong>().HasKey(ps => new { ps.Playlist_ID, ps.Song_ID });
+
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Subscription)
-                .WithMany(s => s.Users)
-                .HasForeignKey(u => u.Subscription_ID)
+                .WithOne(s => s.User)
+                .HasForeignKey<User>(u => u.Subscription_ID)
                 .OnDelete(DeleteBehavior.Restrict); // No cascading delete for Users
 
             modelBuilder.Entity<Song>()
@@ -60,6 +62,8 @@ namespace Tunify_Platform.Data
                 .WithMany(ar => ar.Albums)
                 .HasForeignKey(a => a.Artist_ID)
                 .OnDelete(DeleteBehavior.Restrict); // No cascading delete for Albums
+
+
 
             // Seed data for Subscription
             modelBuilder.Entity<Subscription>().HasData(
@@ -99,8 +103,8 @@ namespace Tunify_Platform.Data
 
             // Seed data for PlaylistSong
             modelBuilder.Entity<PlaylistSong>().HasData(
-                new PlaylistSong { Id = 1, Playlist_ID = 1, Song_ID = 1 },
-                new PlaylistSong { Id = 2, Playlist_ID = 2, Song_ID = 2 }
+                new PlaylistSong { Playlist_ID = 1, Song_ID = 1 },
+                new PlaylistSong { Playlist_ID = 2, Song_ID = 2 }
             );
 
             base.OnModelCreating(modelBuilder);
