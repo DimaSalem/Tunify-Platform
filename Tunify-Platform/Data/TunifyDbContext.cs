@@ -9,6 +9,7 @@ namespace Tunify_Platform.Data
         {
 
         }
+        //swagger 
         public DbSet<User> User { get; set; }
         public DbSet<Subscription> subscription { get; set; }
         public DbSet<Song> song { get; set; }
