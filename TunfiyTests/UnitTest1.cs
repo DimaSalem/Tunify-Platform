@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
-
 using Tunify_Platform.Data;
 using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.Services;
@@ -11,7 +10,7 @@ namespace TunifyTests
     public class PlaylistServiceTests
     {
         [Fact]
-        public async Task GetSongsInPlaylistAsync_ShouldReturnCorrectSongs(TunifyDbContext context)
+        public async Task GetSongsInPlaylistAsync_ShouldReturnCorrectSongs()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<TunifyDbContext>()
@@ -74,9 +73,9 @@ namespace TunifyTests
                 await context.SaveChangesAsync();
             }
 
-            using (var context = new TunifyDbContext(options))
+            using (var context1 = new TunifyDbContext(options))
             {
-                var service = new PlaylistService(context, context, context);
+                var service = new PlaylistService(context1);
 
                 // Act
                 var songs = await service.GetPLaylistSongs(1);

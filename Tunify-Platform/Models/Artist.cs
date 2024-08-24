@@ -5,7 +5,7 @@
         public int ID { get; set; }//PK
         public string Name { get; set; }
         public string Bio { get; set; }
-        public ICollection<Song> Songs { get; set; }
+        public ICollection<Song> Songs { get; set; }= new List <Song>();
         public ICollection<Album> Albums { get; set; }
     }
 }
