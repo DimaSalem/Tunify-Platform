@@ -42,3 +42,42 @@ Open a Browser: Navigate to http://localhost:<port>/swagger, replacing <port> wi
 Using Swagger UI
 Explore Endpoints: View and interact with API endpoints.
 Test Requests: Use the "Try it out" feature to send requests and see responses.
+
+### Identity Setup Instructions
+
+#### Overview
+
+This section describes how to use the registration, login, and logout features implemented in the Tunify Platform using ASP.NET Core Identity.
+
+#### Setting Up Identity
+
+Install Required Package:
+
+Use NuGet Package Manager to install:
+
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+#### Configuration:
+
+In the Program.cs file:
+
+Add Identity services:
+
+`builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<TunifyDbContext>();`
+
+Add Authentication middleware:
+
+`app.UseAuthentication();`
+
+User Registration:
+Users can register by sending a POST request to the /Account/Register endpoint with the required details.
+
+User Login:
+To log in, users should send a POST request to the /Account/Login endpoint with their credentials.
+
+User Logout:
+Users can log out by sending a POST request to the /Account/Logout endpoint.
+
+Error Handling
+The application provides user-friendly error messages and logs errors for troubleshooting.

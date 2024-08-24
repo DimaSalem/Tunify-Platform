@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Tunify_Platform.Data;
 using Tunify_Platform.Repositories.interfaces;
 using Tunify_Platform.Repositories.Services;
-using Moq;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tunify_Platform
 {
@@ -11,7 +11,7 @@ namespace Tunify_Platform
     {
         public static void Main(string[] args)
         {
-            //1
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
@@ -38,12 +38,16 @@ namespace Tunify_Platform
 
             builder.Services.AddDbContext<TunifyDbContext>(optionsX => optionsX.UseSqlServer(ConnectionStringVar));
 
+            //Identity 
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TunifyDbContext>();
+            builder.Services.AddScoped<IAccount, IdentityAccountService>();
+
             // Register repositories
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IPlaylist, PlaylistService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
 
-            //2
+
             var app = builder.Build();
 
             app.UseSwagger(
@@ -60,11 +64,11 @@ namespace Tunify_Platform
                 options.RoutePrefix = "";
             });
 
+            app.UseAuthentication();
             app.MapControllers();
 
-            //3
+
             app.MapGet("/", () => "Hello World!");
-            //4
             app.Run();
         }
     }
