@@ -30,3 +30,15 @@ The Repository Design Pattern is a structural pattern that abstracts data access
 2. **Abstraction**: Hides the complexities of data access, allowing for easier changes to data storage mechanisms without affecting the rest of the application.
 3. **Code Reusability**: Provides a consistent interface for data operations, which can be reused across different parts of the application.
 4. **Improved Testability**: Facilitates unit testing by allowing mock repositories to be used in tests.
+
+### Swagger UI Integration
+
+Overview
+Swagger UI provides an interactive interface to explore and test API endpoints. It generates documentation automatically based on your API code.
+
+Accessing Swagger UI
+Run the Project: Start your project (e.g., dotnet run).
+Open a Browser: Navigate to http://localhost:<port>/swagger, replacing <port> with your application’s port number.
+Using Swagger UI
+Explore Endpoints: View and interact with API endpoints.
+Test Requests: Use the "Try it out" feature to send requests and see responses.
