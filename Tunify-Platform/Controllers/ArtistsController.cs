@@ -73,17 +73,17 @@ namespace Tunify_Platform.Controllers
             return NoContent();
         }
 
-        // POST api/playlists/{playlistId}/songs/{songId}
-        [HttpPost("{playlistId}/songs/{songId}")]
-        public async Task<IActionResult> AddPlaylistSong(int artistId, int songId)
+        // POST api/artists/{artistId}/songs/{songId}
+        [HttpPost("{artistId}/songs/{songId}")]
+        public async Task<IActionResult> AddArtistSong(int artistId, int songId)
         {
             await _artist.AddSongToArtist(artistId, songId);
             return Ok();
         }
 
-        //GET /api/playlists/{playlistId}/songs
-        [HttpGet("{playlistId}/songs")]
-        public async Task<IActionResult> GetPlaylistSongs(int artistId)
+        // GET api/artists/{artistId}/songs
+        [HttpGet("{artistId}/songs")]
+        public async Task<IActionResult> GetArtistSongs(int artistId)
         {
             var songs = await _artist.GetArtistSongs(artistId);
             return Ok(songs);

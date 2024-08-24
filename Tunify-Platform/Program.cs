@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Tunify_Platform.Data;
 using Tunify_Platform.Repositories.interfaces;
 using Tunify_Platform.Repositories.Services;
+using Moq;
 
 namespace Tunify_Platform
 {
@@ -10,7 +11,9 @@ namespace Tunify_Platform
     {
         public static void Main(string[] args)
         {
+            //1
             var builder = WebApplication.CreateBuilder(args);
+
             builder.Services.AddControllers();
 
             // Configure JSON options to handle object cycles
@@ -30,12 +33,14 @@ namespace Tunify_Platform
             builder.Services.AddScoped<IPlaylist, PlaylistService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
 
+            //2
             var app = builder.Build();
+
             app.MapControllers();
 
-
+            //3
             app.MapGet("/", () => "Hello World!");
-
+            //4
             app.Run();
         }
     }

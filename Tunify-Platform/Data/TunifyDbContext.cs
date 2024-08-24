@@ -87,6 +87,8 @@ namespace Tunify_Platform.Data
             modelBuilder.Entity<Song>().HasData(
                 new Song { Id = 1, Title = "Song One", Artist_ID = 1, Album_ID = 1, Duration = "3:45", Gener = "Pop" },
                 new Song { Id = 2, Title = "Song Two", Artist_ID = 2, Album_ID = 2, Duration = "4:05", Gener = "Rock" }
+               // new Song { Id = 3, Title = "Song three", Artist_ID = 1, Album_ID = 1, Duration = "3:45", Gener = "Pop" },
+                //new Song { Id = 4, Title = "Song four", Artist_ID = 2, Album_ID = 2, Duration = "4:05", Gener = "Rock" }
             );
 
             // Seed data for User
@@ -106,6 +108,7 @@ namespace Tunify_Platform.Data
                 new PlaylistSong { Playlist_ID = 1, Song_ID = 1 },
                 new PlaylistSong { Playlist_ID = 2, Song_ID = 2 }
             );
+           
 
             base.OnModelCreating(modelBuilder);
 
