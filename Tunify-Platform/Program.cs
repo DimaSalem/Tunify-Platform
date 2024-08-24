@@ -56,7 +56,7 @@ namespace Tunify_Platform
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Tunify API v1");
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Tunify API v1");
                 options.RoutePrefix = "";
             });
 
