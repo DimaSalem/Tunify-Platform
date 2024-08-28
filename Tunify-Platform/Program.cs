@@ -4,6 +4,7 @@ using Tunify_Platform.Data;
 using Tunify_Platform.Repositories.interfaces;
 using Tunify_Platform.Repositories.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Tunify_Platform
 {
@@ -14,6 +15,7 @@ namespace Tunify_Platform
 
             var builder = WebApplication.CreateBuilder(args);
 
+            //service configuration
             builder.Services.AddControllers();
 
             // Configure JSON options to handle object cycles
@@ -33,6 +35,21 @@ namespace Tunify_Platform
                 });
             });
 
+            //JWT authentication
+            builder.Services.AddAuthentication(
+                options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(
+                options =>
+                {
+                    options.TokenValidationParameters = JwtTokenService.ValidateToken(builder.Configuration);
+                }
+                );
+
+
 
             string ConnectionStringVar = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -47,7 +64,7 @@ namespace Tunify_Platform
             builder.Services.AddScoped<IPlaylist, PlaylistService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
 
-
+            //middleware configuration
             var app = builder.Build();
 
             app.UseSwagger(
@@ -65,6 +82,8 @@ namespace Tunify_Platform
             });
 
             app.UseAuthentication();
+            app.UseAuthorization();
+
             app.MapControllers();
 
 

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using Tunify_Platform.Models.DTO;
 using Tunify_Platform.Repositories.interfaces;
 
@@ -9,10 +12,15 @@ namespace Tunify_Platform.Repositories.Services
     {
         private UserManager<IdentityUser> _userManager;
         private SignInManager<IdentityUser> _signInManager;
-        public IdentityAccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly IConfiguration _configuration;
+
+
+        public IdentityAccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, 
+            IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _configuration = configuration;
         }
         public async Task<UserDto> Register(RegisterDto registerDto, ModelStateDictionary modelState)
         {
@@ -59,12 +67,32 @@ namespace Tunify_Platform.Repositories.Services
             }
             return null;
         }
-
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
         }
 
-       
+        public async Task<string> GenerateToken(IdentityUser user, TimeSpan expiryDate)
+        {
+            var userPrincliple = await _signInManager.CreateUserPrincipalAsync(user);
+            if (userPrincliple == null)
+            {
+                return null;
+            }
+
+            var signInKey = JwtTokenService.GetSecurityKey(_configuration);
+
+            var token = new JwtSecurityToken
+                (
+                expires: DateTime.UtcNow + expiryDate,
+                signingCredentials: new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256),
+                claims: userPrincliple.Claims
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+
+
     }
 }
