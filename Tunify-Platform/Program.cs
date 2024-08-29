@@ -5,6 +5,7 @@ using Tunify_Platform.Repositories.interfaces;
 using Tunify_Platform.Repositories.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 namespace Tunify_Platform
 {
@@ -35,6 +36,20 @@ namespace Tunify_Platform
                 });
             });
 
+            //connection string + DbContext
+            string ConnectionStringVar = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddDbContext<TunifyDbContext>(optionsX => optionsX.UseSqlServer(ConnectionStringVar));
+
+            //Identity 
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TunifyDbContext>();
+            builder.Services.AddScoped<IAccount, IdentityAccountService>();
+
+            // Register repositories
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IPlaylist, PlaylistService>();
+            builder.Services.AddScoped<IArtist, ArtistService>();
+
             //JWT authentication
             builder.Services.AddAuthentication(
                 options =>
@@ -49,24 +64,61 @@ namespace Tunify_Platform
                 }
                 );
 
+            //Authorize based on claims 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("CanEdit", policy => policy.RequireClaim("Permission", "CanEdit"));
+            });
 
 
-            string ConnectionStringVar = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            builder.Services.AddDbContext<TunifyDbContext>(optionsX => optionsX.UseSqlServer(ConnectionStringVar));
+            //swagger configuration
+            builder.Services.AddSwaggerGen
+                (
 
-            //Identity 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TunifyDbContext>();
-            builder.Services.AddScoped<IAccount, IdentityAccountService>();
+                option =>
+                {
+                    option.SwaggerDoc("employeesApi", new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "Employees Api Doc",
+                        Version = "v1",
+                        Description = "Api for managing all emolyees"
+                    });
 
-            // Register repositories
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            builder.Services.AddScoped<IPlaylist, PlaylistService>();
-            builder.Services.AddScoped<IArtist, ArtistService>();
+                    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer",
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Description = "Please enter user token below."
+                    });
+
+                    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
+                    });
+
+
+                });
+
 
             //middleware configuration
             var app = builder.Build();
 
+            //swagger
             app.UseSwagger(
              options =>
              {

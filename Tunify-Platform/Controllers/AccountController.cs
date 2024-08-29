@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 //using Microsoft.Identity.Client;
 using Tunify_Platform.Models.DTO;
@@ -34,11 +35,35 @@ namespace Tunify_Platform.Controllers
             return Ok(user);
         }
 
+        
         [HttpPost("Logout")] //Logout
         public async Task<IActionResult> Logout()
         {
             await _userService.Logout();
             return Ok();
+        }
+
+
+        //for test 
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(Roles = "Admin")]
+        [Authorize(Policy = "CanEdit")]
+        [HttpGet("Profile")]
+        public async Task<ActionResult<UserDto>> Profile()
+        {
+            return await _userService.userProfile(User);
+        }
+
+        //for test 
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize]
+        //[Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminOnly")]
+        [HttpGet("Tokens")]
+        //[Route("Tokens")]
+        public IActionResult TestAuthorization()
+        {
+            return Ok("You're Authorized");
         }
     }
 }

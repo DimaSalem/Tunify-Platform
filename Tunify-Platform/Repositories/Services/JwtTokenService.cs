@@ -7,13 +7,6 @@ namespace Tunify_Platform.Repositories.Services
 {
     public class JwtTokenService
     {
-        private SignInManager<IdentityUser> _signInManager;
-        private readonly IConfiguration _configuration;
-        public JwtTokenService(SignInManager<IdentityUser> signInManager, IConfiguration configuration)
-        {
-            _configuration = configuration;
-            _signInManager = signInManager;
-        }
         public static TokenValidationParameters ValidateToken(IConfiguration configuration)
         {
             return new TokenValidationParameters
@@ -26,7 +19,7 @@ namespace Tunify_Platform.Repositories.Services
 
         }
 
-        private static SecurityKey GetSecurityKey(IConfiguration configuration)
+        public static SecurityKey GetSecurityKey(IConfiguration configuration)
         {
             var secretKey = configuration["JWT:SecretKey"];
             if (secretKey == null)
