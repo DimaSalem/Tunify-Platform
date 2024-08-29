@@ -81,3 +81,42 @@ Users can log out by sending a POST request to the /Account/Logout endpoint.
 
 Error Handling
 The application provides user-friendly error messages and logs errors for troubleshooting.
+
+# Securing API Endpoints with JWT, Roles, and Claims
+
+## Overview
+
+This project demonstrates how to secure API endpoints using JWT authentication and role-based authorization in ASP.NET Core 7.
+
+## Setup
+
+1. **Configure JWT Authentication**
+   - Update `Program.cs` to include JWT configuration.
+2. **Define Roles and Claims**
+
+   - Implement roles and claims handling in your application.
+   - Use policies to restrict access to endpoints.
+
+3. **Seed Initial Data**
+
+   - Seed roles and a default admin user in `TunifyDbContext`.
+
+4. **Migrations**
+   - Run `add-migration migrationName` to create the migration.
+   - Apply the migration with `update-database`.
+
+## Usage
+
+- **Secured Endpoints**
+  - `[Authorize(Roles = "Admin")]` - Access restricted to Admin users.
+  - `[Authorize(Policy = "CanEdit")]` - Access restricted to User that have permission to edit.
+  - `[Authorize]` - Access restricted to authenticated users.
+
+## Example
+
+- **Admin Data**: Access with role `Admin`.
+- **Any Data**: Access for authenticated users.
+
+## Notes
+
+Ensure you have correctly configured your JWT settings and database connection.

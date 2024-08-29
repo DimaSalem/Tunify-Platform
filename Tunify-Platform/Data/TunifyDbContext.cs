@@ -21,6 +21,8 @@ namespace Tunify_Platform.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new { ps.Playlist_ID, ps.Song_ID });
 
             modelBuilder.Entity<User>()
@@ -112,9 +114,41 @@ namespace Tunify_Platform.Data
             );
            
 
-            base.OnModelCreating(modelBuilder);
 
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" }
+        );
+
+            // Seed Claims
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(
+                new IdentityRoleClaim<string>
+                {
+                    Id = 1,
+                    RoleId = "1", // Admin role
+                    ClaimType = "Permission",
+                    ClaimValue = "CanEdit"
+                }
+            );
+
+            /*// Seed Users and User Roles
+            modelBuilder.Entity<IdentityUser>().HasData(
+                new IdentityUser
+                {
+                    Id = "admin-id",
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
+                    Email = "admin@example.com",
+                    NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "Admin@123")
+                }
+            );*/
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = "2c9ff0db-8008-4eec-8f71-c232725247e2", RoleId = "1" }
+            );
         }
+    
     }
 
 }
